@@ -1,0 +1,40 @@
+id = "temet.git"
+name = "git"
+version = "0.1.0"
+min_ask_kit = "0.2.0"
+requires = ["git"]
+says = "the local git repository: what is uncommitted, staged or in conflict, which commit changed a line or a file and why, what changed between two commits or since a date, whether a branch is merged or pushed, which branches, worktrees and stashes exist, where lost work went; and acting on it (stage, commit, push, pull, merge, rebase, stash, branch, tag, worktree, restore)"
+keywords = ["git", "commits?", "uncommitted", "staged", "branch(es)?", "worktrees?", "stash(es)?", "rebase", "merge conflicts?", "blame", "reflog", "cherry-pick", "unpushed", "ahead|behind", "committed", "pushed", "merged", "what changed", "diff"]
+route_hint = "the state and history of the local git repository (uncommitted work, branches, worktrees, stashes, what a commit changed, whether something is merged or pushed) and git operations are git; what the code says or where something is defined is code; a pull request, issue or CI run on GitHub is github; what a past session did is sessions"
+cite = "a short commit sha, a branch name, or `path:line`"
+instructions = "instructions.md"
+state_key = "${GIT_ROOT}"
+acts = [
+  "git add, rm, mv, restore, reset, clean (what is staged and what is in the work tree)",
+  "git commit, revert, cherry-pick, merge, rebase, am, apply (history)",
+  "git push, pull (the remote)",
+  "git checkout, switch, and branch, tag, stash, worktree, remote, config when they create, delete, move or set",
+]
+
+[[settings]]
+key = "GIT_ROOT"
+about = "the repository to answer about; found from the folder the agent works in"
+detect = ["git", "rev-parse", "--show-toplevel"]
+
+[[sources]]
+kind = "module"
+name = "git"
+module = "git.mjs"
+api = "api.d.ts"
+
+[[roles]]
+name = "committer"
+when = "a request to stage, commit, push, or tidy commits before a merge request"
+patterns = ["^(please )?(commit|stage|push|amend|squash)\\b"]
+instructions = "roles/committer.md"
+
+[[roles]]
+name = "archaeologist"
+when = "a question about why, when or by whom something was changed, or which commit introduced a behaviour"
+patterns = ["\\b(why|when|who)\\b.*\\b(chang|add|remov|introduc|delet|broke)\\w*", "\\bwhich commit\\b"]
+instructions = "roles/archaeologist.md"

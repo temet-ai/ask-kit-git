@@ -1,0 +1,11 @@
+{
+  "about": "The kinds of question agents answer by hand with git: is it committed and pushed, is the branch merged, what changed, which commit changed this line, which worktrees exist. Each is put to a small repository that bench/make-fixture.sh builds in bench/fixtures/discworld (run it once before the bench; its dates, names and messages are fixed, so the answers do not change). Each names its repository by path relative to the kit folder, because the kit otherwise answers about the repository the agent works in.",
+  "questions": [
+    { "id": "branch-merged", "q": "In bench/fixtures/discworld, was the branch fix/library-index merged, and by which commit?", "expect": ["Merge branch 'fix/library-index'", "merged|Merge"] },
+    { "id": "line-changed", "q": "In bench/fixtures/discworld, which commit last changed the members line of Cargo.toml (line 1), and what did that commit add?", "expect": ["Add the guilds member", "guilds"] },
+    { "id": "worktrees", "q": "Which worktrees does the repository at bench/fixtures/discworld have, and is any of them locked? Why?", "expect": ["night-watch", "locked", "night shift"] },
+    { "id": "commit-search", "q": "In bench/fixtures/discworld, which commit added the Thieves' Guild, on which date, and which file did it add?", "expect": ["2026-01-13|13 Jan", "thieves\\.txt"] },
+    { "id": "between-tags", "q": "In bench/fixtures/discworld, what changed between v0.1.0 and v0.2.0: how many commits and how many files?", "expect": ["\\b5\\b", "\\b5\\b.{0,20}files|files.{0,20}\\b5\\b"] },
+    { "id": "state-shot", "do": "state", "params": { "path": "bench/fixtures/discworld" }, "expect": ["\"branch\"", "\"worktrees\"", "night-watch"] }
+  ]
+}
