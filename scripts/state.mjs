@@ -8,16 +8,15 @@ export const meta = {
 
 export default async function ({ git }, { path, commits = 5 } = {}) {
   const g = path ? git.at(path) : git;
-  const [repo, s, recent, trees] = [await g.repo(), await g.status(), await g.log({ max: commits }), await g.worktrees()];
-  const worktrees = [];
-  for (const w of trees) {
+  const [repo, s, recent, trees] = await Promise.all([g.repo(), g.status(), g.log({ max: commits }), g.worktrees()]);
+  const worktrees = await Promise.all(trees.map(async (w) => {
     let uncommitted = null;
     if (w.exists) {
       const r = await git.at(w.path).run("status", "--porcelain");
       uncommitted = r.code === 0 ? r.out.split("\n").filter(Boolean).length : null;
     }
-    worktrees.push({ path: w.path, branch: w.branch ?? "(detached)", sha: w.sha, uncommitted, locked: w.locked, prunable: w.prunable, exists: w.exists, main: w.main });
-  }
+    return { path: w.path, branch: w.branch ?? "(detached)", sha: w.sha, uncommitted, locked: w.locked, prunable: w.prunable, exists: w.exists, main: w.main };
+  }));
   return {
     root: repo.root,
     remotes: repo.remotes,
