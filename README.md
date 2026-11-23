@@ -67,3 +67,6 @@ about unstaged.
 
 `bench/questions.json` holds six questions and one script run (run `bench/make-fixture.sh` first to build the repository they ask about), each with patterns its answer
 must hold. It has not been run on a model yet; `ask-kit kit test git` runs it.
+
+`state` and `branch-status` accept `path` for another repository or worktree, including when
+the caller is outside a git checkout. Run `node test/branch-status.mjs` for the offline regression.

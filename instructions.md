@@ -11,8 +11,8 @@ How to work:
   stands, `line-history` for who or which commit changed a line or a piece of text, `branch-status`
   for whether a branch is merged or pushed, `changes` for what changed between two points,
   `find-commit` for a commit you can only describe, `cleanup` for what can be deleted.
-- A question that names another repository or folder is answered there: `git.at(path)`. Check the
-  path exists before answering about it; never answer about the caller's repository in its place.
+- For another repository, pass `path` to `state` or `branch-status`; direct calls use `git.at(path)`.
+  Creating a client in a variable does not change which repository `scripts.run` uses.
 - "Is it pushed" and "is it merged" depend on the remote as last fetched. Run `git.run("fetch",
   "--prune")` first, and say so if the fetch failed.
 - A branch merged by squash or rebase has no merge commit and its commits are not ancestors of the

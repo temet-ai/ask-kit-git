@@ -2,6 +2,7 @@ export const meta = {
   purpose:
     "Whether a branch is merged and pushed. Compares it with its upstream (commits not pushed, commits not pulled) and with a base branch: merged by a merge commit or fast-forward, merged by squash or rebase (its patches are in the base under other shas), or not merged, with the commits still only on it. Fetches first unless told not to.",
   params: {
+    path: "another repository or worktree, optional (default: the caller's)",
     branch: "the branch, optional (default: the current one)",
     base: "the branch to compare with, optional (default: the remote's default branch, else main or master)",
     fetch: "fetch from the remote first, default true",
@@ -10,7 +11,8 @@ export const meta = {
   example: 'await scripts.run("branch-status", { branch: "fix/nested-repo-binding" })',
 };
 
-export default async function status({ git }, { branch, base, fetch = true } = {}) {
+export default async function status({ git }, { path, branch, base, fetch = true } = {}) {
+  if (path) git = git.at(path);
   const this_ = (p) => status({ git }, p);
   let fetched = null;
   if (fetch) {
