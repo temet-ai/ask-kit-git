@@ -1,6 +1,6 @@
 id = "temet.git"
 name = "git"
-version = "0.1.2"
+version = "0.1.3"
 min_ask_kit = "0.2.0"
 requires = ["git"]
 says = "the local git repository: what is uncommitted, staged or in conflict, which commit changed a line or a file and why, what changed between two commits or since a date, whether a branch is merged or pushed, which branches, worktrees and stashes exist, where lost work went; and acting on it (stage, commit, push, pull, merge, rebase, stash, branch, tag, worktree, restore)"
