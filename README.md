@@ -74,5 +74,7 @@ about unstaged.
 `bench/questions.json` holds six questions and one script run (run `bench/make-fixture.sh` first to build the repository they ask about), each with patterns its answer
 must hold. It has not been run on a model yet; `ask-kit kit test git` runs it.
 
-`state` and `branch-status` accept `path` for another repository or worktree, including when
-the caller is outside a git checkout. Run `node test/branch-status.mjs` for the offline regression.
+`state` and `branch-status` accept `path`, and `changes`, `find-commit` and `line-history` accept `repo`,
+for another repository or worktree, including when the caller is outside a git checkout. `state` also
+reports the latest tag and the commits since it. Run `node test/branch-status.mjs` and
+`node test/repo-param.mjs` for the offline regressions.

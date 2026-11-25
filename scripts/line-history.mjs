@@ -2,6 +2,7 @@ export const meta = {
   purpose:
     "Who changed a line or a piece of text, in which commit and why. Give a file with a line (or a range) for the commits that last touched those lines, or `text` for every commit that added or removed that exact text anywhere (or in `file`). Each commit comes with its full message.",
   params: {
+    repo: "another repository or worktree to look at, optional (default: the caller's)",
     file: "path of the file, optional when text is given",
     line: "line number, optional",
     to: "last line of a range, optional",
@@ -13,7 +14,8 @@ export const meta = {
   example: 'await scripts.run("line-history", { file: "src/router.mjs", line: 120, to: 128 })',
 };
 
-export default async function ({ git }, { file, line, to, text, past, max = 15 } = {}) {
+export default async function ({ git }, { repo, file, line, to, text, past, max = 15 } = {}) {
+  if (repo) git = git.at(repo);
   if (!file && !text) throw new Error("give a file (with a line) or text");
   const out = {};
   let shas = [];

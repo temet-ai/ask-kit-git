@@ -5,6 +5,7 @@ export const meta = {
     message: "regex on the commit message, optional",
     text: "exact text the commit added or removed, optional",
     path: "a file or folder it touched, optional",
+    repo: "another repository or worktree to search, optional (default: the caller's)",
     author: "author name or email, optional",
     since: "optional",
     until: "optional",
@@ -15,7 +16,8 @@ export const meta = {
   example: 'await scripts.run("find-commit", { message: "nested repo binding", since: "2 weeks ago" })',
 };
 
-export default async function ({ git }, { message, text, path, author, since, until, lost = false, max = 20 } = {}) {
+export default async function ({ git }, { message, text, path, repo, author, since, until, lost = false, max = 20 } = {}) {
+  if (repo) git = git.at(repo);
   if (!message && !text && !path && !author && !since && !lost) throw new Error("give at least one of message, text, path, author, since, lost");
   const found = await git.log({ all: true, grep: message, added: text, path, author, since, until, max });
   const commits = [];

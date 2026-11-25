@@ -7,13 +7,15 @@ export const meta = {
     since: "a time instead of from: '3 days ago', '2026-11-18', optional",
     until: "end of the window, optional",
     path: "narrow to a file or folder, optional",
+    repo: "another repository or worktree to look at, optional (default: the caller's)",
     branchOnly: "true: only what `to` added since it left `from` (a branch's own changes), default false",
   },
   returns: "{range, commits:[{short, author, date, subject}], files:[{path, added, deleted, change}], byFolder:{folder:{files, added, deleted}}, added, deleted}",
   example: 'await scripts.run("changes", { from: "v0.3.0", to: "HEAD" })',
 };
 
-export default async function ({ git }, { from, to = "HEAD", since, until, path, branchOnly = false } = {}) {
+export default async function ({ git }, { from, to = "HEAD", since, until, path, repo, branchOnly = false } = {}) {
+  if (repo) git = git.at(repo);
   const fold = (files) => {
     const by = {};
     for (const f of files) {

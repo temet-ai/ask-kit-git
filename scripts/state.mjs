@@ -2,13 +2,15 @@ export const meta = {
   purpose:
     "Where a repository stands right now: branch and upstream with ahead and behind, files staged, changed, untracked and in conflict, an operation in progress, stashes, the last commits, and every worktree with its branch and how many files are uncommitted in it.",
   params: { path: "another repository or worktree to look at, optional (default: the caller's)", commits: "how many recent commits to list, default 5" },
-  returns: "{root, branch, upstream, ahead, behind, operation, staged, changed, untracked, conflicted, stashes, recent:[{short, date, subject}], worktrees:[{path, branch, sha, uncommitted, locked, exists}]}",
+  returns: "{root, branch, upstream, ahead, behind, operation, staged, changed, untracked, conflicted, stashes, recent:[{short, date, subject}], latestTag, commitsSinceTag (commits on HEAD after the nearest tag; local tags only, say so when asked whether a tag is pushed), worktrees:[{path, branch, sha, uncommitted, locked, exists}]}",
   example: 'await scripts.run("state")',
 };
 
 export default async function ({ git }, { path, commits = 5 } = {}) {
   const g = path ? git.at(path) : git;
   const [repo, s, recent, trees] = await Promise.all([g.repo(), g.status(), g.log({ max: commits }), g.worktrees()]);
+  const tag = (await g.run("describe", "--tags", "--abbrev=0")).out.trim() || null;
+  const sinceTag = tag ? Number((await g.run("rev-list", "--count", `${tag}..HEAD`)).out.trim()) : null;
   const worktrees = await Promise.all(trees.map(async (w) => {
     let uncommitted = null;
     if (w.exists) {
@@ -26,6 +28,8 @@ export default async function ({ git }, { path, commits = 5 } = {}) {
     behind: s.behind,
     operation: s.operation,
     clean: s.clean,
+    latestTag: tag,
+    commitsSinceTag: sinceTag,
     staged: s.staged,
     changed: s.changed,
     untracked: s.untracked.slice(0, 100),
