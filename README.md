@@ -39,6 +39,12 @@ in; a question that names another folder is answered there.
 | Skills | `commit`, `conflicts`, `recover`, `rewrite-history`, `worktrees`: playbooks the investigator loads when the job calls for one |
 | Roles | `committer` for requests to stage, commit or push; `archaeologist` for why, when and who |
 
+Questions that name a git thing plainly go straight to this kit without the router model:
+`which commit` followed by changed, added, removed, introduced, deleted, broke, fixed or touched;
+`was the branch X merged`; `which worktrees`; `what changed between` two tags or commits; and
+uncommitted, unpushed or unstaged work. A question that also names docs, a README, a merge or pull
+request, an issue, CI or a session is left to the router, so those kits keep theirs.
+
 Each script also runs with no model: `ask-kit run git state`, or `ask(do: "git.state")` from an
 agent.
 
