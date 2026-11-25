@@ -18,6 +18,8 @@ for (const q of [
   "Which worktrees does the repository have, and is any of them locked?",
   "what changed between v0.1.0 and v0.2.0?",
   "is anything uncommitted or unpushed?",
+  "are there any unstaged changes?",
+  "what is uncommitted?",
 ]) assert.ok(claims(q), `git should claim: ${q}`);
 
 for (const q of [
@@ -27,6 +29,14 @@ for (const q of [
   "which commit fixed the failing CI run?",
   "which commit did the last session make?",
   "which commit",
+  "where does the code handle uncommitted changes?",
+  "which function detects unstaged files?",
+  "which projects have unpushed commits across the machine?",
+  "which of my projects are dirty or uncommitted?",
+  "which repos have uncommitted work?",
+  "which worktrees across all my repos are stale?",
+  "what changed between commits in the docs?",
+  "which commit changed the code that handles retries across repos?",
   "where is the router defined?",
 ]) assert.ok(!claims(q), `git should leave: ${q}`);
 

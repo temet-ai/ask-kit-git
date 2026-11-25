@@ -6,11 +6,11 @@ requires = ["git"]
 says = "the local git repository: what is uncommitted, staged or in conflict, which commit changed a line or a file and why, what changed between two commits or since a date, whether a branch is merged or pushed, which branches, worktrees and stashes exist, where lost work went; and acting on it (stage, commit, push, pull, merge, rebase, stash, branch, tag, worktree, restore)"
 keywords = ["git", "commits?", "uncommitted", "staged", "branch(es)?", "worktrees?", "stash(es)?", "rebase", "merge conflicts?", "blame", "reflog", "cherry-pick", "unpushed", "ahead|behind", "committed", "pushed", "merged", "what changed", "diff"]
 patterns = [
-  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?)\\b).*\\bwhich commit (last |first |actually )?(changed|added|removed|introduced|deleted|broke|fixed|touched)\\b",
-  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?)\\b).*\\bwas (the )?branch \\S+ (merged|pushed)\\b",
-  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?)\\b).*\\bwhich worktrees\\b",
-  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?)\\b).*\\bwhat changed between (v?\\d[\\w.]*|tags?|commits?|branches|[0-9a-f]{7,40})\\b",
-  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?)\\b).*\\b(uncommitted|unpushed|unstaged)\\b",
+  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?|repos?|repositories|projects?|machine|functions?|code|across|all my)\\b).*\\bwhich commit (last |first |actually )?(changed|added|removed|introduced|deleted|broke|fixed|touched)\\b",
+  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?|repos?|repositories|projects?|machine|functions?|code|across|all my)\\b).*\\bwas (the )?branch \\S+ (merged|pushed)\\b",
+  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?|repos?|repositories|projects?|machine|functions?|code|across|all my)\\b).*\\bwhich worktrees\\b",
+  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?|repos?|repositories|projects?|machine|functions?|code|across|all my)\\b).*\\bwhat changed between (v?\\d[\\w.]*|tags?|commits?|branches|[0-9a-f]{7,40})\\b",
+  "^(?!.*\\b(docs?|documentation|readme|merge requests?|pull requests?|MRs?|PRs?|issues?|pipelines?|CI|sessions?|repos?|repositories|projects?|machine|functions?|code|across|all my)\\b)(are there|is there|do i have|what is|what's|is anything|is it|any) (any |anything )?(\\w+ ){0,2}?(uncommitted|unpushed|unstaged)\\b",
 ]
 route_hint = "the state and history of the local git repository (uncommitted work, branches, worktrees, stashes, what a commit changed, whether something is merged or pushed) and git operations are git; what the code says or where something is defined is code; a pull request, issue or CI run on GitHub is github; what a past session did is sessions"
 cite = "a short commit sha, a branch name, or `path:line`"
